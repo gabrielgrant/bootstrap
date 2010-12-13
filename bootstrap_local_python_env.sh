@@ -17,6 +17,8 @@ touch ~/.bashrc
 # include a new file within bashrc, so we don't have to screw around
 # with the original
 if [ "$(grep 'bashrc_extras' ~/.bashrc)" ]; then
+    echo "~/.bashrc already contains bashrc_extras. Moving right along..."
+else
     echo '
 if [ -f ~/.bashrc_extras ]; then
     . ~/.bashrc_extras
@@ -30,11 +32,8 @@ if [ `echo "$PATH" | grep --no-filename -c "$HOME/.local/bin"` ]; then
 ## http://www.python.org/dev/peps/pep-0370/
 PATH="/home/gabriel/.local/bin:$PATH"
 ' >> ~/.bashrc_extras
-fi
-
-echo "~/.local/bin is now on PATH: $PATH" 
-
-echo '
+    
+    echo '
 ## for easy_install
 alias easy_install="easy_install --prefix=\"~/.local\""
 
@@ -47,11 +46,15 @@ fi
 export PIP_RESPECT_VIRTUALENV=true
 export PIP_VIRTUALENV_BASE=$WORKON_HOME
 ' >> ~/.bashrc_extras
+fi
 
 echo "slurping in the new changes"
 source ~/.bashrc
 
-easy_install  pip
+echo "~/.local/bin is now on PATH: $PATH" 
+
+
+easy_install --prefix="~/.local"  pip
 pip install --user virtualenv
 pip install --user virtualenvwrapper
 mkdir -p ~/.virtualenvs
