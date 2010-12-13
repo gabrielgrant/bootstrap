@@ -32,6 +32,8 @@ PATH="/home/gabriel/.local/bin:$PATH"
 ' >> ~/.bashrc_extras
 fi
 
+echo "~/.local/bin is now on PATH: $PATH" 
+
 echo '
 ## for easy_install
 alias easy_install="easy_install --prefix=\"~/.local\""
@@ -46,12 +48,12 @@ export PIP_RESPECT_VIRTUALENV=true
 export PIP_VIRTUALENV_BASE=$WORKON_HOME
 ' >> ~/.bashrc_extras
 
-# slurp in the new changes
+echo "slurping in the new changes"
 source ~/.bashrc
 
 easy_install  pip
 pip install --user virtualenv
 pip install --user virtualenvwrapper
-mkdir ~/.virtualenvs
+mkdir -p ~/.virtualenvs
 
 
